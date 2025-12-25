@@ -3,8 +3,15 @@ import re
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
-model = joblib.load("../models/fake_news_model.pkl")
-tfidf = joblib.load("../models/tfidf_vectorizer.pkl")
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "..", "models", "fake_news_model.pkl")
+VECT_PATH = os.path.join(BASE_DIR, "..", "models", "tfidf_vectorizer.pkl")
+
+model = joblib.load(MODEL_PATH)
+tfidf = joblib.load(VECT_PATH)
+
 
 stop_words = set(stopwords.words("english"))
 lemmatizer = WordNetLemmatizer()
@@ -23,3 +30,9 @@ def predict_news(text):
     vectorized = tfidf.transform([cleaned])
     prediction = model.predict(vectorized)
     return "REAL NEWS" if prediction[0] == 1 else "FAKE NEWS"
+
+
+if __name__ == "__main__":
+    text = "Breaking news: Scientists discover a new species of bird in the Amazon rainforest."
+    result = predict_news(text)
+    print("Prediction:", result)
