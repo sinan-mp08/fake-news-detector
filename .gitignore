@@ -1,0 +1,12 @@
+# Ignore datasets
+data/
+*.csv
+
+# Ignore notebooks checkpoints
+.ipynb_checkpoints/
+
+# Ignore virtual environment
+.venv/
+
+# Ignore Python cache
+__pycache__/
